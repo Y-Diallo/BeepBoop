@@ -39,10 +39,10 @@ public class BlockGenerator : MonoBehaviour
             GenerateBlock();
         }
 
-        foreach (GameObject floor in activeFloors)
-        {
-            floor.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
-        }
+        // foreach (GameObject floor in activeFloors)
+        // {
+        //     floor.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
+        // }
         // Check if a new floor needs to be generated
         if (nextFloorGenerationPosition - transform.position.z < floorGenerationDistance)
         {

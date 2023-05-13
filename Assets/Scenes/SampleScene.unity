@@ -162,7 +162,6 @@ MonoBehaviour:
   middleLanePosition: {x: 0, y: 0, z: 0}
   rightLanePosition: {x: 3, y: 0, z: 0}
   jumpHeight: 2
-  laneChangeCooldown: 0.5
   gameOver: 0
   isJumping: 0
 --- !u!136 &32037107
@@ -276,7 +275,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &705507993
 GameObject:
@@ -485,8 +484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26c348a43226d84094565d6672ff1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPrefab: {fileID: 3651453957248933013, guid: cdea8648367cf1c469006e0f8df82e7d, type: 3}
-  floorPrefab: {fileID: 3651453957248933013, guid: 0915082b9483569428831060ba58062e, type: 3}
+  blockPrefab: {fileID: 8402735521250307789, guid: cdea8648367cf1c469006e0f8df82e7d, type: 3}
+  floorPrefab: {fileID: 7212048178588327941, guid: 002fd0d18b2c7964e881e41e228fe5e6, type: 3}
   blockSpeed: 5
   blockGenerationDistance: 20
   floorGenerationDistance: 100
