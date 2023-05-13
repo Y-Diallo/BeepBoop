@@ -4,19 +4,17 @@ using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float laneDistance = 2f; // distance between each lane
+    [SerializeField] float laneDistance = 3f; // distance between each lane
     [SerializeField] float jumpHeight = 2f; // height of the jump
-    [SerializeField] float jumpTime = 1f; // time it takes for the jump to complete
 
     public bool gameOver = false; // whether the game is over
     private int currentLane = 1; // the lane the player is currently in
-    private bool isJumping = false; // whether the player is currently jumping
-    private float jumpStartTime; // the time the jump started
-    private Vector3 jumpStartPosition; // the starting position of the jump
-    private Vector3 jumpTargetPosition; // the target position of the jump
+    public bool isJumping = false; // whether the player is currently jumping
+    private Rigidbody rigidBody; // the player's rigid body
     void Start()
     {
         gameObject.tag = "Player"; // Set the tag of the player object to "Player"
+        rigidBody = GetComponent<Rigidbody>(); // Get the player's rigid body
     }
     void Update()
     {
@@ -27,12 +25,14 @@ public class PlayerController : MonoBehaviour
         {
             currentLane--;
             transform.position -= new Vector3(laneDistance, 0, 0);
+            Debug.Log("Player position is " + transform.position);
             Debug.Log("currentLane is " + currentLane + " moving left");
         }
         else if (horizontalInput > 0 && currentLane < 2)
         {
             currentLane++;
             transform.position += new Vector3(laneDistance, 0, 0);
+            Debug.Log("Player position is " + transform.position);
             Debug.Log("currentLane is " + currentLane + " moving right");
         }
         
@@ -40,33 +40,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !isJumping)
         {
             isJumping = true;
-            jumpStartTime = Time.time;
-            jumpStartPosition = transform.position;
-            jumpTargetPosition = transform.position + new Vector3(0, jumpHeight, 0);
-        }
-
-        // Handle the player's jump
-        if (isJumping)
-        {
-            float jumpProgress = (Time.time - jumpStartTime) / jumpTime;
-
-            // Move the player towards the target position over time
-            transform.position = Vector3.Lerp(jumpStartPosition, jumpTargetPosition, jumpProgress);
-
-            // If the jump is complete, stop jumping and start falling
-            if (jumpProgress >= 1f)
-            {
-                isJumping = false;
-                jumpStartTime = Time.time;
-                jumpStartPosition = transform.position;
-                jumpTargetPosition = transform.position - new Vector3(0, jumpHeight, 0);
-            }
-        }
-        else
-        {
-            // Handle the player's falling motion when not jumping
-            float fallProgress = (Time.time - jumpStartTime) / jumpTime;
-            transform.position = Vector3.Lerp(jumpStartPosition, jumpTargetPosition, fallProgress);
+            rigidBody.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
         }
     }
 }

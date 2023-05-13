@@ -1,1 +1,5 @@
 *.csproj
+Library
+Logs
+obj
+.vscode
