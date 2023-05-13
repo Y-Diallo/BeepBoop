@@ -12,6 +12,7 @@ public class BlockGenerator : MonoBehaviour
     public float laneDistance = 3.0f;
 
     private List<GameObject> activeBlocks = new List<GameObject>();
+    private List<GameObject> activeFloors = new List<GameObject>();
     private int currentLane = 1;
     private float nextBlockGenerationPosition = 0.0f;
     private float nextFloorGenerationPosition = 0.0f;
@@ -38,6 +39,10 @@ public class BlockGenerator : MonoBehaviour
             GenerateBlock();
         }
 
+        foreach (GameObject floor in activeFloors)
+        {
+            floor.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
+        }
         // Check if a new floor needs to be generated
         if (nextFloorGenerationPosition - transform.position.z < floorGenerationDistance)
         {
@@ -67,7 +72,7 @@ public class BlockGenerator : MonoBehaviour
 
         // Create the new floor
         GameObject newFloor = Instantiate(floorPrefab, new Vector3(0.0f, -1.0f, zPos), Quaternion.identity);
-
+        activeFloors.Add(newFloor);
         // Update the next floor generation position
         nextFloorGenerationPosition += floorGenerationDistance;
     }

@@ -5,9 +5,9 @@ using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float laneChangeSpeed = 5f; // speed of lane change
+    [SerializeField] float laneChangeSpeed = 2000f; // speed of lane change
     [SerializeField] Vector3 leftLanePosition = new Vector3(-3f, 0, 0); // position of left lane
-    [SerializeField] Vector3 middleLanePosition = new Vector3(0, 0, 0); // position of middle lane
+    [SerializeField] Vector3 middleLanePosition = Vector3.zero; // position of middle lane
     [SerializeField] Vector3 rightLanePosition = new Vector3(3f, 0, 0); // position of right lane
     [SerializeField] float jumpHeight = 2f; // height of the jump
     // [SerializeField] float laneChangeCooldown = 0f; // time delay before the player can change lanes again
@@ -23,11 +23,13 @@ public class PlayerController : MonoBehaviour
         gameObject.tag = "Player"; // Set the tag of the player object to "Player"
         rigidBody = GetComponent<Rigidbody>(); // Get the player's rigid body
         targetLanePosition = middleLanePosition;
+
+        
         lanePositions[0] = leftLanePosition;
         lanePositions[1] = middleLanePosition;
         lanePositions[2] = rightLanePosition;
     }
-    void Update()
+    void FixedUpdate()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput < 0 && currentLane > 0 && canLaneChange)
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
             targetLanePosition = lanePositions[currentLane];
             canLaneChange = false;
             StartCoroutine(StartCooldown());
+            Debug.Log(targetLanePosition);
         }
         else if (horizontalInput > 0 && currentLane < 2 && canLaneChange )
         {
@@ -43,11 +46,12 @@ public class PlayerController : MonoBehaviour
             targetLanePosition = lanePositions[currentLane];
             canLaneChange = false;
             StartCoroutine(StartCooldown());
+            Debug.Log(targetLanePosition);
         }
 
-        Debug.Log(canLaneChange);
         // Move the player smoothly towards the target lane
         transform.position = Vector3.Lerp(transform.position, targetLanePosition, laneChangeSpeed * Time.deltaTime);
+        // transform.position = targetLanePosition;
         
         // Make the player jump when the space bar is pressed
         if (Input.GetButtonDown("Jump") && !isJumping)
