@@ -22,10 +22,5 @@ public class PlayerCollisionHandler : MonoBehaviour
             // playerController.jumpTargetPosition = transform.position - new Vector3(0, playerController.jumpHeight, 0);
             playerController.gameOver = true;
         }
-        if (groundLayer.value.Equals(collision.gameObject.layer))
-        {
-            PlayerController playerController = GetComponent<PlayerController>();
-            playerController.isJumping = false;
-        }
     }
 }
