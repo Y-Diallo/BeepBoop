@@ -4,6 +4,7 @@ public class BlockingObject : MonoBehaviour
 {
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("BOX Collision detected");
         // Check if the collision was with the player object
         if (collision.gameObject.CompareTag("Player"))
         {

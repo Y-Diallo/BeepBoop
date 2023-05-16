@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     // private bool InRoll = false; // whether the player is currently rolling
     private float x; // the x position of the player
     private float y; // the y position of the player
+    public float z; // the z position of the player
     void Start()
     {
         gameObject.tag = "Player"; // Set the tag of the player object to "Player"
@@ -28,7 +29,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // characterController.Move(Vector3.forward * Time.deltaTime * 10f);
+        characterController.Move(Vector3.forward * Time.deltaTime * 10f);
+        z = transform.position.z;
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput < 0 && canLaneChange)
         {
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
     public System.Collections.IEnumerator StartCooldown()
      {
         canLaneChange = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.15f);
         canLaneChange = true;
      }
 }

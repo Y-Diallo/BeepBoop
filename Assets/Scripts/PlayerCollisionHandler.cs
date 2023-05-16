@@ -7,7 +7,9 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collision detected");
         // Check if the collision was with a blocking object
+        Debug.Log(collision.gameObject.layer);
         if ((blockingLayer.value.Equals(collision.gameObject.layer)))
         {
             // Reset the player's position to the center lane and ground level

@@ -6,8 +6,8 @@ public class BlockGenerator : MonoBehaviour
     public GameObject blockPrefab;
     public GameObject floorPrefab;
     public float blockSpeed = 5.0f;
-    public float blockGenerationDistance = 20.0f;
-    public float floorGenerationDistance = 100.0f;
+    public float blockGenerationDistance = 30.0f;
+    public float floorGenerationDistance = 1f;
     public int numberOfLanes = 3;
     public float laneDistance = 3.0f;
 
@@ -16,9 +16,14 @@ public class BlockGenerator : MonoBehaviour
     private int currentLane = 1;
     private float nextBlockGenerationPosition = 0.0f;
     private float nextFloorGenerationPosition = 0.0f;
+    public PlayerController playerController;
 
     void Start()
     {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        GenerateFloor();
+        GenerateFloor();
+        GenerateFloor();
         GenerateFloor();
         GenerateBlock();
         GenerateBlock();
@@ -34,7 +39,7 @@ public class BlockGenerator : MonoBehaviour
         }
 
         // Check if a new block needs to be generated
-        if (nextBlockGenerationPosition - transform.position.z < blockGenerationDistance)
+        if (nextBlockGenerationPosition - playerController.z <= blockGenerationDistance)
         {
             GenerateBlock();
         }
@@ -44,8 +49,14 @@ public class BlockGenerator : MonoBehaviour
         //     floor.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
         // }
         // Check if a new floor needs to be generated
-        if (nextFloorGenerationPosition - transform.position.z < floorGenerationDistance)
+        Debug.Log("nextFloorGenerationPosition: " + nextFloorGenerationPosition);
+        Debug.Log("playerController.z: " + playerController.z);
+        // next floor - player z
+        Debug.Log("nextFloorGenerationPosition - playerController.z: " + (nextFloorGenerationPosition - playerController.z));
+        Debug.Log("floorGenerationDistance: " + floorGenerationDistance);
+        if (nextFloorGenerationPosition - playerController.z <= floorGenerationDistance*3)
         {
+            Debug.Log("Generating floor");
             GenerateFloor();
         }
     }
@@ -75,5 +86,12 @@ public class BlockGenerator : MonoBehaviour
         activeFloors.Add(newFloor);
         // Update the next floor generation position
         nextFloorGenerationPosition += floorGenerationDistance;
+
+        // Destroy the oldest floor after a new one is generated with a buffer of 3
+        if (activeFloors.Count > 5)
+        {
+            Destroy(activeFloors[0]);
+            activeFloors.RemoveAt(0);
+        }
     }
 }
