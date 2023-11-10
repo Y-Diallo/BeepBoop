@@ -25,4 +25,10 @@ public class PlayerCollisionHandler : MonoBehaviour
             playerController.gameOver = true;
         }
     }
+    void OnTriggerEnter(Collider other) {
+        Debug.Log("player is colliding");
+        if (other.gameObject.CompareTag("Collectable")) {
+            // other.gameObject.GetComponent<CollectableFactory>();
+        }
+    }
 }

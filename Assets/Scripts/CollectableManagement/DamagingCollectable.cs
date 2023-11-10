@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamagingCollectable : MonoBehaviour
+public class DamagingCollectable : Collectable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public DamagingCollectable(Vector3 initialPosition, GameObject obstaclePrefab) :base(initialPosition,obstaclePrefab){}
+    public override void OnPlayerCollision() {
+        base.OnPlayerCollision();
+        Debug.Log("damaging Obstacle");
     }
 }

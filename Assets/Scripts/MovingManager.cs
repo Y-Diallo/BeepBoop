@@ -6,25 +6,36 @@ public class MovingManager : MonoBehaviour
     public GameObject collectablePrefab;
     public GameObject floorPrefab;
     public float blockSpeed = 5.0f;
+    public float distanceBetweenCollectables = 30.0f;
+    public float collectableGenerationDistance = 30.0f;
     public float distanceBetweenBlocks = 30.0f;
     public float blockGenerationDistance = 30.0f;
     public float floorGenerationDistance = 10.0f;
     public int numberOfLanes = 3;
 
     private ObstacleFactory obstacleFactory;
+    private CollectableFactory collectableFactory;
     private float distanceBetweenFloors = 10.0f;
     private float laneDistance = 3.0f;
     private List<Obstacle> activeBlocks = new List<Obstacle>();
+    private List<Collectable> activeCollectables = new List<Collectable>();
     private List<GameObject> activeFloors = new List<GameObject>();
-    private int currentLane = 1;
     private float nextBlockGenerationPosition = 10.0f;
+    private float nextCollectableGenerationPosition = 10.0f;
     private float nextFloorGenerationPosition = -50.0f;
+    // TODO WIP obstacleGenerationMode
+    // private string obstacleGenerationMode = "default"; // "boss1","boss2","boss3" (consider enum val)
     public PlayerController playerController;
 
     void Start()
     {
+        nextFloorGenerationPosition = -floorGenerationDistance;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        obstacleFactory = GameObject.Find("ObstacleFactory").GetComponent<ObstacleFactory>();
+
+        var factory = GameObject.Find("Factory");
+        obstacleFactory = factory.GetComponent<ObstacleFactory>();
+        collectableFactory = factory.GetComponent<CollectableFactory>();
+
         GenerateFloor();
         GenerateFloor();
         GenerateFloor();
@@ -39,7 +50,9 @@ public class MovingManager : MonoBehaviour
 
     void Update()
     {
+
         // Move the active blocks towards the player
+        // all blocks queried to move, blocks can manage this in their impl
         foreach (Obstacle block in activeBlocks)
         {
             block.moveObstacle(blockSpeed);
@@ -48,19 +61,15 @@ public class MovingManager : MonoBehaviour
         // Check if a new block needs to be generated
         if (nextBlockGenerationPosition - playerController.z <= distanceBetweenBlocks)
         {
-            GenerateBlock();
+            int lane = Random.Range(0, numberOfLanes)-1;
+            GenerateBlock(lane,"stillBig");
+        }
+        if (nextCollectableGenerationPosition - playerController.z <= distanceBetweenCollectables)
+        {
+            int lane = Random.Range(0, numberOfLanes)-1;
+            GenerateCollectable(lane,"damaging");
         }
 
-        // foreach (GameObject floor in activeFloors)
-        // {
-        //     floor.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
-        // }
-        // Check if a new floor needs to be generated
-        // Debug.Log("nextFloorGenerationPosition: " + nextFloorGenerationPosition);
-        // Debug.Log("playerController.z: " + playerController.z);
-        // // next floor - player z
-        // Debug.Log("nextFloorGenerationPosition - playerController.z: " + (nextFloorGenerationPosition - playerController.z));
-        // Debug.Log("floorGenerationDistance: " + floorGenerationDistance);
         if (nextFloorGenerationPosition - playerController.z <= distanceBetweenFloors)
         {
             // Debug.Log("Generating floor");
@@ -68,15 +77,14 @@ public class MovingManager : MonoBehaviour
         }
     }
 
-    void GenerateBlock()
+    void GenerateBlock(int lane, string type)
     {
         // Calculate the position of the new block
-        int lane = Random.Range(0, numberOfLanes);
-        float xPos = (lane - currentLane) * laneDistance;
+        float xPos = lane * laneDistance;
         float zPos = nextBlockGenerationPosition + blockGenerationDistance;
 
         // Create the new block
-        Obstacle newBlock = obstacleFactory.createObstacle("big", new Vector3(xPos, 0.0f, zPos));
+        Obstacle newBlock = obstacleFactory.createObstacle(type, new Vector3(xPos, 0.0f, zPos));
         activeBlocks.Add(newBlock);
 
         // Update the next block generation position
@@ -87,6 +95,26 @@ public class MovingManager : MonoBehaviour
         {
             Destroy(activeBlocks[0]);
             activeBlocks.RemoveAt(0);
+        }
+    }
+    void GenerateCollectable(int lane, string type)
+    {
+        // Calculate the position of the new block
+        float xPos = lane * laneDistance;
+        float zPos = nextCollectableGenerationPosition + collectableGenerationDistance;
+
+        // Create the new block
+        Collectable newCollectable = collectableFactory.createCollectable(type, new Vector3(xPos, 3.0f, zPos));
+        activeCollectables.Add(newCollectable);
+
+        // Update the next block generation position
+        nextCollectableGenerationPosition += distanceBetweenCollectables;
+
+        // Destroy the oldest block after a new one is generated with a buffer of 3
+        if (activeCollectables.Count > 15)
+        {
+            Destroy(activeCollectables[0]);
+            activeCollectables.RemoveAt(0);
         }
     }
 

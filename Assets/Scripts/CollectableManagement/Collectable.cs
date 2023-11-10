@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private GameObject collectable;
+    public Collectable(Vector3 initialPosition, GameObject collectablePrefab){
+        collectable = Instantiate(collectablePrefab, initialPosition, Quaternion.identity);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void setUp(Vector3 initialPosition, GameObject collectablePrefab){
+        collectable = Instantiate(collectablePrefab, initialPosition, Quaternion.identity);
+    }
+    public void moveCollectable(float blockSpeed){
+        collectable.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
+    }
+    public virtual void OnPlayerCollision() {
+        Debug.Log("collision with Player");
+        collectable.SetActive(false);
     }
 }

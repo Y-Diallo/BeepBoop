@@ -12,7 +12,7 @@ public class Obstacle : MonoBehaviour
     public void setUp(Vector3 initialPosition, GameObject obstaclePrefab){
         obstacle = Instantiate(obstaclePrefab, initialPosition, Quaternion.identity);
     }
-    public void moveObstacle(float blockSpeed){
+    public virtual void moveObstacle(float blockSpeed){
         obstacle.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
     }
 

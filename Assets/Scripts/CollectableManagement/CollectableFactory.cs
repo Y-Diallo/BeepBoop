@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CollectableFactory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public GameObject movingManager;
+    [SerializeField] private GameObject damagingCollectablePrefab;
+
+    public DamagingCollectable createDamagingCollectable(Vector3 position){
+        var collectable = movingManager.AddComponent<DamagingCollectable>();
+        collectable.setUp(position, damagingCollectablePrefab);
+        return collectable;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public Collectable createCollectable(string type, Vector3 position){
+        if (type == "damaging"){
+            return createDamagingCollectable(position);
+        }
+        return createDamagingCollectable(position);
     }
 }
+

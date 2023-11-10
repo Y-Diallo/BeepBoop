@@ -305,8 +305,9 @@ GameObject:
   m_Component:
   - component: {fileID: 649783783}
   - component: {fileID: 649783782}
+  - component: {fileID: 649783784}
   m_Layer: 0
-  m_Name: ObstacleFactory
+  m_Name: Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,6 +342,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &649783784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649783781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a3e841534e40c44bd1e6a4688e51ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movingManager: {fileID: 2016475137}
+  damagingCollectablePrefab: {fileID: 8402735521250307789, guid: 39916003f7f154842b92f3d89ae16b70, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,9 +589,11 @@ MonoBehaviour:
   collectablePrefab: {fileID: 8402735521250307789, guid: 39916003f7f154842b92f3d89ae16b70, type: 3}
   floorPrefab: {fileID: 7212048178588327941, guid: 002fd0d18b2c7964e881e41e228fe5e6, type: 3}
   blockSpeed: 5
+  distanceBetweenCollectables: 30
+  collectableGenerationDistance: 30
   distanceBetweenBlocks: 15
-  blockGenerationDistance: 40
-  floorGenerationDistance: 50
+  blockGenerationDistance: 50
+  floorGenerationDistance: 100
   numberOfLanes: 3
   playerController: {fileID: 32037106}
 --- !u!4 &2016475140
