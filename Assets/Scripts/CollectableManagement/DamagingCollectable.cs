@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DamagingCollectable : Collectable
 {
-    public DamagingCollectable(Vector3 initialPosition, GameObject obstaclePrefab) :base(initialPosition,obstaclePrefab){}
-    public override void OnPlayerCollision() {
-        base.OnPlayerCollision();
-        Debug.Log("damaging Obstacle");
+    public DamagingCollectable() :base(){}
+    public override void OnPlayerCollision(GameObject player) {
+        base.OnPlayerCollision(player);
+        Debug.Log("damaging collectable");
     }
 }

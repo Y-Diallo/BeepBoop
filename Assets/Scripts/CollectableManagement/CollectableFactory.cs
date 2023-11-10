@@ -7,13 +7,13 @@ public class CollectableFactory : MonoBehaviour
     public GameObject movingManager;
     [SerializeField] private GameObject damagingCollectablePrefab;
 
-    public DamagingCollectable createDamagingCollectable(Vector3 position){
-        var collectable = movingManager.AddComponent<DamagingCollectable>();
-        collectable.setUp(position, damagingCollectablePrefab);
+    public GameObject createDamagingCollectable(Vector3 position){
+        var collectable = Instantiate(damagingCollectablePrefab, position, Quaternion.identity);
+        collectable.AddComponent<DamagingCollectable>();
         return collectable;
     }
 
-    public Collectable createCollectable(string type, Vector3 position){
+    public GameObject createCollectable(string type, Vector3 position){
         if (type == "damaging"){
             return createDamagingCollectable(position);
         }

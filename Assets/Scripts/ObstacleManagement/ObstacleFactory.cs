@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,19 +7,19 @@ public class ObstacleFactory : MonoBehaviour
     public GameObject movingManager;
     [SerializeField] private GameObject bigPrefab;
 
-    public BigObstacle createBigObstacle(UnityEngine.Vector3 position){
-        var obstacle = movingManager.AddComponent<BigObstacle>();
-        obstacle.setUp(position, bigPrefab);
+    public GameObject createBigObstacle(Vector3 position){
+        var obstacle = Instantiate(bigPrefab, position, Quaternion.identity);
+        obstacle.AddComponent<BigObstacle>();
         return obstacle;
     }
 
-    public StillBigObstacle createStillBigObstacle(UnityEngine.Vector3 position){
-        var obstacle = movingManager.AddComponent<StillBigObstacle>();
-        obstacle.setUp(position, bigPrefab);
+    public GameObject createStillBigObstacle(Vector3 position){
+        var obstacle = Instantiate(bigPrefab, position, Quaternion.identity);
+        obstacle.AddComponent<StillBigObstacle>();
         return obstacle;
     }
 
-    public Obstacle createObstacle(string type, UnityEngine.Vector3 position){
+    public GameObject createObstacle(string type, UnityEngine.Vector3 position){
         if (type == "big"){
             return createBigObstacle(position);
         } else if (type == "stillBig"){

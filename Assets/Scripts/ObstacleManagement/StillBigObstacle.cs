@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StillBigObstacle : BigObstacle
 {
-    public StillBigObstacle(Vector3 initialPosition, GameObject obstaclePrefab) :base(initialPosition,obstaclePrefab){}
+    public StillBigObstacle() :base(){}
     public override void moveObstacle(float blockSpeed){
         return;
     }

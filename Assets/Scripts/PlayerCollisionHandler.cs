@@ -28,7 +28,9 @@ public class PlayerCollisionHandler : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         Debug.Log("player is colliding");
         if (other.gameObject.CompareTag("Collectable")) {
-            // other.gameObject.GetComponent<CollectableFactory>();
+            other.gameObject.GetComponent<Collectable>().OnPlayerCollision(this.gameObject);
+        } else if(other.gameObject.CompareTag("Obstacle")){
+            other.gameObject.GetComponent<Obstacle>().OnPlayerCollision(this.gameObject);
         }
     }
 }

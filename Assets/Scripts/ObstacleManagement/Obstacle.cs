@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    private GameObject obstacle;
-    public Obstacle(Vector3 initialPosition, GameObject obstaclePrefab){
-        obstacle = Instantiate(obstaclePrefab, initialPosition, Quaternion.identity);
-    }
-
-    public void setUp(Vector3 initialPosition, GameObject obstaclePrefab){
-        obstacle = Instantiate(obstaclePrefab, initialPosition, Quaternion.identity);
-    }
+    public Obstacle(){}
     public virtual void moveObstacle(float blockSpeed){
-        obstacle.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
+        this.gameObject.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
     }
-
+    public virtual void OnPlayerCollision(GameObject player) {
+        Debug.Log("obstacle collision with Player");
+        // this.gameObject.SetActive(false);
+    }
 }

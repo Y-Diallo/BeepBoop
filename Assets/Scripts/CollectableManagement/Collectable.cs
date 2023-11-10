@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    private GameObject collectable;
-    public Collectable(Vector3 initialPosition, GameObject collectablePrefab){
-        collectable = Instantiate(collectablePrefab, initialPosition, Quaternion.identity);
-    }
-
-    public void setUp(Vector3 initialPosition, GameObject collectablePrefab){
-        collectable = Instantiate(collectablePrefab, initialPosition, Quaternion.identity);
-    }
+    public Collectable(){}
     public void moveCollectable(float blockSpeed){
-        collectable.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
+        this.gameObject.transform.Translate(Vector3.back * blockSpeed * Time.deltaTime);
     }
-    public virtual void OnPlayerCollision() {
-        Debug.Log("collision with Player");
-        collectable.SetActive(false);
+    public virtual void OnPlayerCollision(GameObject player) {
+        Debug.Log("collectable collision with Player");
+        this.gameObject.SetActive(false);
     }
 }

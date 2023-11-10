@@ -17,8 +17,8 @@ public class MovingManager : MonoBehaviour
     private CollectableFactory collectableFactory;
     private float distanceBetweenFloors = 10.0f;
     private float laneDistance = 3.0f;
-    private List<Obstacle> activeBlocks = new List<Obstacle>();
-    private List<Collectable> activeCollectables = new List<Collectable>();
+    private List<GameObject> activeBlocks = new List<GameObject>();
+    private List<GameObject> activeCollectables = new List<GameObject>();
     private List<GameObject> activeFloors = new List<GameObject>();
     private float nextBlockGenerationPosition = 10.0f;
     private float nextCollectableGenerationPosition = 10.0f;
@@ -53,9 +53,9 @@ public class MovingManager : MonoBehaviour
 
         // Move the active blocks towards the player
         // all blocks queried to move, blocks can manage this in their impl
-        foreach (Obstacle block in activeBlocks)
+        foreach (GameObject block in activeBlocks)
         {
-            block.moveObstacle(blockSpeed);
+            block.GetComponent<Obstacle>().moveObstacle(blockSpeed);
         }
 
         // Check if a new block needs to be generated
@@ -84,7 +84,7 @@ public class MovingManager : MonoBehaviour
         float zPos = nextBlockGenerationPosition + blockGenerationDistance;
 
         // Create the new block
-        Obstacle newBlock = obstacleFactory.createObstacle(type, new Vector3(xPos, 0.0f, zPos));
+        GameObject newBlock = obstacleFactory.createObstacle(type, new Vector3(xPos, 0.0f, zPos));
         activeBlocks.Add(newBlock);
 
         // Update the next block generation position
@@ -104,7 +104,7 @@ public class MovingManager : MonoBehaviour
         float zPos = nextCollectableGenerationPosition + collectableGenerationDistance;
 
         // Create the new block
-        Collectable newCollectable = collectableFactory.createCollectable(type, new Vector3(xPos, 3.0f, zPos));
+        GameObject newCollectable = collectableFactory.createCollectable(type, new Vector3(xPos, 3.0f, zPos));
         activeCollectables.Add(newCollectable);
 
         // Update the next block generation position

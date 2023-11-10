@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BigObstacle : Obstacle
 {
-    public BigObstacle(Vector3 initialPosition, GameObject obstaclePrefab) :base(initialPosition,obstaclePrefab){}
+    public BigObstacle() :base(){}
     // Start is called before the first frame update
     void Start()
     {
