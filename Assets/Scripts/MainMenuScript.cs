@@ -8,7 +8,7 @@ public class MainMenuScript : MonoBehaviour
    
     public void PlayButton()
     {
-        SceneManager.LoadScene("GameSceneLv1");
+        SceneManager.LoadScene("SampleScene");
     }
 
 
