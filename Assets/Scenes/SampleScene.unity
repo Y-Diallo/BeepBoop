@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51aa3738751222048911ff2bcba5c46a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   laneChangeSpeed: 5
   laneDistance: 3
   jumpHeight: 15
@@ -261,8 +261,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edf3c05a5e9711c49a4e06559d48da35, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   blockingLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 649783783}
   - component: {fileID: 649783782}
   - component: {fileID: 649783784}
+  - component: {fileID: 649783785}
   m_Layer: 0
   m_Name: Factory
   m_TagString: Untagged
@@ -323,10 +324,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fb68acadac6e7e4d8740c8bdd1afdfb, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  movingManager: {fileID: 2016475137}
+  m_Name: 
+  m_EditorClassIdentifier: 
   bigPrefab: {fileID: 8402735521250307789, guid: cdea8648367cf1c469006e0f8df82e7d, type: 3}
+  rampPrefab: {fileID: 0}
 --- !u!4 &649783783
 Transform:
   m_ObjectHideFlags: 0
@@ -352,10 +353,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72a3e841534e40c44bd1e6a4688e51ba, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  movingManager: {fileID: 2016475137}
+  m_Name: 
+  m_EditorClassIdentifier: 
   damagingCollectablePrefab: {fileID: 8402735521250307789, guid: 39916003f7f154842b92f3d89ae16b70, type: 3}
+--- !u!114 &649783785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649783781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3569398608e416d4cab6a8da1068e637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level1BossPrefab: {fileID: 3012554715132903280, guid: 20cfd704e6b4d9c43b38f8692916578a, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,8 +566,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf2c700fd3e72f1458f8cf33d618edd7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   target: {fileID: 32037110}
   speed: 5
 --- !u!1 &2016475137
@@ -584,8 +597,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d26c348a43226d84094565d6672ff1cf, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   collectablePrefab: {fileID: 8402735521250307789, guid: 39916003f7f154842b92f3d89ae16b70, type: 3}
   floorPrefab: {fileID: 7212048178588327941, guid: 002fd0d18b2c7964e881e41e228fe5e6, type: 3}
   blockSpeed: 5
