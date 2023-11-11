@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CollectableFactory : MonoBehaviour
 {
-    public GameObject movingManager;
     [SerializeField] private GameObject damagingCollectablePrefab;
 
     public GameObject createDamagingCollectable(Vector3 position){
