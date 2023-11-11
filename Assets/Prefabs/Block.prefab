@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3120325723453724918}
   - component: {fileID: 16042362159253466}
   - component: {fileID: 5056355426912978659}
-  - component: {fileID: 5731989111119382447}
+  - component: {fileID: 4058521657737451527}
   m_Layer: 6
   m_Name: Block
   m_TagString: Untagged
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56748abcc1fa184e97a5f73768e2817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &5731989111119382447
+--- !u!54 &4058521657737451527
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,8 +141,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
