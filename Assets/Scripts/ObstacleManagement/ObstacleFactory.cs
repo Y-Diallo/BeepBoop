@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObstacleFactory : MonoBehaviour
 {
-    public GameObject movingManager;
     [SerializeField] private GameObject bigPrefab;
+    [SerializeField] private GameObject rampPrefab;
 
     public GameObject createBigObstacle(Vector3 position){
         var obstacle = Instantiate(bigPrefab, position, Quaternion.identity);

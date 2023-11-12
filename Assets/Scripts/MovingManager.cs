@@ -15,16 +15,18 @@ public class MovingManager : MonoBehaviour
 
     private ObstacleFactory obstacleFactory;
     private CollectableFactory collectableFactory;
+    private BossFactory bossFactory;
     private float distanceBetweenFloors = 10.0f;
     private float laneDistance = 3.0f;
     private List<GameObject> activeBlocks = new List<GameObject>();
     private List<GameObject> activeCollectables = new List<GameObject>();
     private List<GameObject> activeFloors = new List<GameObject>();
+    private GameObject boss;
     private float nextBlockGenerationPosition = 10.0f;
     private float nextCollectableGenerationPosition = 10.0f;
     private float nextFloorGenerationPosition = -50.0f;
     // TODO WIP obstacleGenerationMode
-    // private string obstacleGenerationMode = "default"; // "boss1","boss2","boss3" (consider enum val)
+    // private string obstacleGenerationMode = "default"; // "level1","level2","level3" (consider enum val)
     public PlayerController playerController;
 
     void Start()
@@ -35,6 +37,9 @@ public class MovingManager : MonoBehaviour
         var factory = GameObject.Find("Factory");
         obstacleFactory = factory.GetComponent<ObstacleFactory>();
         collectableFactory = factory.GetComponent<CollectableFactory>();
+        bossFactory = factory.GetComponent<BossFactory>();
+
+        boss = bossFactory.createBoss("level1",new Vector3(0.0f, 8.0f, 20.0f));
 
         GenerateFloor();
         GenerateFloor();
@@ -50,7 +55,7 @@ public class MovingManager : MonoBehaviour
 
     void Update()
     {
-
+        boss.GetComponent<Boss>().moveBoss(10.0f);
         // Move the active blocks towards the player
         // all blocks queried to move, blocks can manage this in their impl
         foreach (GameObject block in activeBlocks)
