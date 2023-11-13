@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3120325723453724918}
   - component: {fileID: 16042362159253466}
   m_Layer: 6
-  m_Name: Collectable
+  m_Name: BulletCollectable
   m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a30aa4585cafd941aa219134be5d71e, type: 2}
+  - {fileID: 2100000, guid: 4869aed4973ec8049bc1903f20cb99b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -8,5 +8,6 @@ public class DamagingCollectable : Collectable
     public override void OnPlayerCollision(GameObject player) {
         base.OnPlayerCollision(player);
         Debug.Log("damaging collectable");
+        player.GetComponent<PlayerController>().doGameOver();
     }
 }

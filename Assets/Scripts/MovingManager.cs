@@ -22,11 +22,18 @@ public class MovingManager : MonoBehaviour
     private List<GameObject> activeCollectables = new List<GameObject>();
     private List<GameObject> activeFloors = new List<GameObject>();
     private GameObject boss;
+    private bool bossActive = false;
     private float nextBlockGenerationPosition = 10.0f;
     private float nextCollectableGenerationPosition = 10.0f;
+    private int blocksSpawned = 0; //used to determine when the boss is spawned
     private float nextFloorGenerationPosition = -50.0f;
-    // TODO WIP obstacleGenerationMode
+    // TODO WIP obstacleGenerationMode // used to have custom block spawning modes for bosses
     // private string obstacleGenerationMode = "default"; // "level1","level2","level3" (consider enum val)
+
+    //temporary switches for generation type, use more sophisticated method
+    private string blockGenerationType = "stillBig";
+    private string collectableGenerationType = "bullet";
+
     public PlayerController playerController;
 
     void Start()
@@ -39,7 +46,6 @@ public class MovingManager : MonoBehaviour
         collectableFactory = factory.GetComponent<CollectableFactory>();
         bossFactory = factory.GetComponent<BossFactory>();
 
-        boss = bossFactory.createBoss("level1",new Vector3(0.0f, 8.0f, 20.0f));
 
         GenerateFloor();
         GenerateFloor();
@@ -55,7 +61,14 @@ public class MovingManager : MonoBehaviour
 
     void Update()
     {
-        boss.GetComponent<Boss>().moveBoss(10.0f);
+        if(!bossActive && blocksSpawned > 10){
+            boss = bossFactory.createBoss("level1",new Vector3(playerController.x, 8.0f, playerController.z+20.0f));
+            collectableGenerationType = "damaging";
+            blockGenerationType = "big";
+            bossActive = true;
+        }else if(bossActive){//boss is active
+            boss.GetComponent<Boss>().moveBoss(10.0f);
+        }
         // Move the active blocks towards the player
         // all blocks queried to move, blocks can manage this in their impl
         foreach (GameObject block in activeBlocks)
@@ -67,12 +80,12 @@ public class MovingManager : MonoBehaviour
         if (nextBlockGenerationPosition - playerController.z <= distanceBetweenBlocks)
         {
             int lane = Random.Range(0, numberOfLanes)-1;
-            GenerateBlock(lane,"stillBig");
+            GenerateBlock(lane,blockGenerationType);
         }
         if (nextCollectableGenerationPosition - playerController.z <= distanceBetweenCollectables)
         {
             int lane = Random.Range(0, numberOfLanes)-1;
-            GenerateCollectable(lane,"damaging");
+            GenerateCollectable(lane,collectableGenerationType);
         }
 
         if (nextFloorGenerationPosition - playerController.z <= distanceBetweenFloors)
@@ -101,6 +114,7 @@ public class MovingManager : MonoBehaviour
             Destroy(activeBlocks[0]);
             activeBlocks.RemoveAt(0);
         }
+        blocksSpawned++;
     }
     void GenerateCollectable(int lane, string type)
     {
