@@ -6,6 +6,7 @@ public class CollectableFactory : MonoBehaviour
 {
     [SerializeField] private GameObject damagingCollectablePrefab;
     [SerializeField] private GameObject bulletCollectablePrefab;
+    [SerializeField] private GameObject boss1CollectablePrefab;
 
     public GameObject createDamagingCollectable(Vector3 position){
         var collectable = Instantiate(damagingCollectablePrefab, position, Quaternion.identity);
@@ -17,6 +18,11 @@ public class CollectableFactory : MonoBehaviour
         collectable.AddComponent<BulletCollectable>();
         return collectable;
     }
+    public GameObject createBoss1Collectable(Vector3 position){
+        var collectable = Instantiate(boss1CollectablePrefab, position, Quaternion.identity);
+        collectable.AddComponent<Boss1Collectable>();
+        return collectable;
+    }
 
     public GameObject createCollectable(string type, Vector3 position){
         if (type == "damaging"){
@@ -24,6 +30,9 @@ public class CollectableFactory : MonoBehaviour
         }
         if (type == "bullet"){
             return createBulletCollectable(position);
+        }
+        if (type == "boss1"){
+            return createBoss1Collectable(position);
         }
         return createDamagingCollectable(position);
     }

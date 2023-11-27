@@ -12,7 +12,6 @@ public class MovingManager : MonoBehaviour
     public float blockGenerationDistance = 30.0f;
     public float floorGenerationDistance = 10.0f;
     public int numberOfLanes = 3;
-
     private ObstacleFactory obstacleFactory;
     private CollectableFactory collectableFactory;
     private BossFactory bossFactory;
@@ -68,6 +67,7 @@ public class MovingManager : MonoBehaviour
             bossActive = true;
         }else if(bossActive){//boss is active
             boss.GetComponent<Boss>().moveBoss(10.0f);
+            collectableGenerationType = boss.GetComponent<Boss>().getCollectableGenerationMode();
         }
         // Move the active blocks towards the player
         // all blocks queried to move, blocks can manage this in their impl
