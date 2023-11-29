@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class PauseMenuScript : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
+    public GameObject gameOverText;
 
     public void PauseButton()
     {
         pauseMenu.SetActive(true);
+        gameOverText.SetActive(false);
         Time.timeScale = 0;
     }
 

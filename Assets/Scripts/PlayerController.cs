@@ -86,6 +86,9 @@ public class PlayerController : MonoBehaviour
         gameOver = true;
         GetComponent<MeshRenderer> ().material = playerDead;
         //show gameover
+
+        // Freeze everything
+        Time.timeScale = 0;
         gameOverText.SetActive(true);
     }
 
