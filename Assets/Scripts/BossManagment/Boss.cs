@@ -5,9 +5,10 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     public Boss(){}
+    private int health = 3;
     private bool movingRight = true; // Initial direction.
     public float speed = 2.0f; // Adjust the speed as needed.
-
+    private AudioSource winSFX;
     private float laneDistance = 3f; // TODO distance between lanes is duplicated from
     // TODO adjust to move boss backward automatically and update a playerspeed var
     public void moveBoss(float playerSpeed){
@@ -16,11 +17,25 @@ public class Boss : MonoBehaviour
     public virtual string getObstacleGenerationMode(){
         return "default";
     }
+    public virtual string getCollectableGenerationMode(){
+        return "bullet";
+    }
+    public void damageBoss(){
+        health -= 1;
+        if(health <= 0){//boss beat
+            winSFX.Play();
+            bossDeath();
+        }
+    }
+
+    public virtual void bossDeath(){
+        this.gameObject.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        winSFX = GameObject.Find("winSFX").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,5 +63,6 @@ public class Boss : MonoBehaviour
         transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
 
     }  
+
 
 }
