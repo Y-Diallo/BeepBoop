@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 146970923}
   - component: {fileID: 146970922}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameOver Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1133,7 +1133,7 @@ GameObject:
   - component: {fileID: 821212963}
   - component: {fileID: 821212962}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GameOver Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
