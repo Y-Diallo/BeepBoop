@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MovingManager : MonoBehaviour
 {
-    public GameObject collectablePrefab;
     public GameObject floorPrefab;
     public float blockSpeed = 5.0f;
     public float distanceBetweenCollectables = 30.0f;
@@ -21,7 +20,7 @@ public class MovingManager : MonoBehaviour
     private List<GameObject> activeCollectables = new List<GameObject>();
     private List<GameObject> activeFloors = new List<GameObject>();
     private GameObject boss;
-    private bool bossActive = false;
+    private bool bossAlive = false;
     private float nextBlockGenerationPosition = 10.0f;
     private float nextCollectableGenerationPosition = 10.0f;
     private int blocksSpawned = 0; //used to determine when the boss is spawned
@@ -32,7 +31,7 @@ public class MovingManager : MonoBehaviour
     //temporary switches for generation type, use more sophisticated method
     private string blockGenerationType = "stillBig";
     private string collectableGenerationType = "bullet";
-
+    private int currentBossThreshold = 10;
     public PlayerController playerController;
 
     void Start()
@@ -60,14 +59,18 @@ public class MovingManager : MonoBehaviour
 
     void Update()
     {
-        if(!bossActive && blocksSpawned > 10){
+        if(!bossAlive && blocksSpawned > currentBossThreshold){
             boss = bossFactory.createBoss("level1",new Vector3(playerController.x, 8.0f, playerController.z+20.0f));
-            collectableGenerationType = "damaging";
-            blockGenerationType = "big";
-            bossActive = true;
-        }else if(bossActive){//boss is active
-            boss.GetComponent<Boss>().moveBoss(10.0f);
+            bossAlive = true;
+        }else if(bossAlive){//boss is active
+            boss.GetComponent<Boss>().moveBoss(12.0f);
+
             collectableGenerationType = boss.GetComponent<Boss>().getCollectableGenerationMode();
+            blockGenerationType = boss.GetComponent<Boss>().getObstacleGenerationMode();
+            bossAlive = boss.GetComponent<Boss>().getBossAlive();
+            if(!bossAlive){
+                updateBossThreshold();
+            }
         }
         // Move the active blocks towards the player
         // all blocks queried to move, blocks can manage this in their impl
@@ -154,5 +157,12 @@ public class MovingManager : MonoBehaviour
             Destroy(activeFloors[0]);
             activeFloors.RemoveAt(0);
         }
+    }
+    void updateBossThreshold(){
+        currentBossThreshold = blocksSpawned + 10;
+    }
+
+    void onBossDeath(){
+
     }
 }

@@ -6,7 +6,7 @@ public class Level1Boss : Boss
 {
     public Level1Boss() :base(){}
     public override string getObstacleGenerationMode(){
-        return "level1";
+        return "big";
     }
     public override string getCollectableGenerationMode(){
         int randomNum = Random.Range(0,2); //0,1

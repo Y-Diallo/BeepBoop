@@ -292,6 +292,7 @@ MonoBehaviour:
   laneChangeSpeed: 5
   laneDistance: 3
   jumpHeight: 15
+  playerSpeed: 12
   side: 1
   hitX: 3
   hitY: 3
@@ -1396,8 +1397,8 @@ GameObject:
   m_Component:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
-  - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194226}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2116,7 +2117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26c348a43226d84094565d6672ff1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectablePrefab: {fileID: 8402735521250307789, guid: 39916003f7f154842b92f3d89ae16b70, type: 3}
   floorPrefab: {fileID: 7212048178588327941, guid: 002fd0d18b2c7964e881e41e228fe5e6, type: 3}
   blockSpeed: 5
   distanceBetweenCollectables: 30
@@ -2152,7 +2152,7 @@ GameObject:
   - component: {fileID: 2140863867}
   - component: {fileID: 2140863868}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: backgroundMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2184,7 +2184,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 87f9f0af049d57d45a47ed66ed60a188, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.56
   m_Pitch: 1
   Loop: 1
