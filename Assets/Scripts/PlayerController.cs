@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float laneChangeSpeed = 5f; // speed of lane change
     [SerializeField] float laneDistance = 3f; // distance between lanes
     [SerializeField] float jumpHeight = 15f; // height of the jump
+    [SerializeField] float playerSpeed = 10f; // height of the jump
     public SIDE side = SIDE.CENTER; // the side the player is currently on
     public HITX hitX = HITX.NONE;
     public HITY hitY = HITY.NONE;
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
         if(gameOver){
             return;
         }
-        characterController.Move(Vector3.forward * Time.deltaTime * 10f);
+        characterController.Move(Vector3.forward * Time.deltaTime * playerSpeed);
         z = transform.position.z;
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput < 0 && canLaneChange)

@@ -15,15 +15,18 @@ public class Boss : MonoBehaviour
         this.gameObject.transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
     }
     public virtual string getObstacleGenerationMode(){
-        return "default";
+        return "stillBig";
     }
     public virtual string getCollectableGenerationMode(){
         return "bullet";
     }
+    public bool getBossAlive(){
+        return health > 0; // if health is <= 0 the boss is dead
+    }
     public void damageBoss(){
         health -= 1;
         if(health <= 0){//boss beat
-            winSFX.Play();
+            // winSFX.Play();
             bossDeath();
         }
     }
@@ -31,7 +34,7 @@ public class Boss : MonoBehaviour
     public virtual void bossDeath(){
         this.gameObject.SetActive(false);
 
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
     }
 
     // Start is called before the first frame update
