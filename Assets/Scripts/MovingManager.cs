@@ -1,8 +1,10 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingManager : MonoBehaviour
 {
+    public GameObject healthBarPrefab;
     public GameObject floorPrefab;
     public float blockSpeed = 5.0f;
     public float distanceBetweenCollectables = 30.0f;
@@ -19,7 +21,10 @@ public class MovingManager : MonoBehaviour
     private List<GameObject> activeBlocks = new List<GameObject>();
     private List<GameObject> activeCollectables = new List<GameObject>();
     private List<GameObject> activeFloors = new List<GameObject>();
+    private GameObject bossHealthBar;
+    private Vector3 bossHealthBarOffset = new Vector3(0.0f, 2f, -2.0f);
     private GameObject boss;
+    private int bossHealth;
     private bool bossAlive = false;
     private float nextBlockGenerationPosition = 10.0f;
     private float nextCollectableGenerationPosition = 10.0f;
@@ -60,16 +65,31 @@ public class MovingManager : MonoBehaviour
     void Update()
     {
         if(!bossAlive && blocksSpawned > currentBossThreshold){
-            boss = bossFactory.createBoss("level1",new Vector3(playerController.x, 8.0f, playerController.z+20.0f));
+            Vector3 bossSpawnLocation = new Vector3(playerController.x, 8.0f, playerController.z+20.0f);
+            boss = bossFactory.createBoss("level1",bossSpawnLocation);
+            bossHealthBar = Instantiate(healthBarPrefab, bossSpawnLocation+bossHealthBarOffset, Quaternion.identity);
+            
+            //set boss health
+            bossHealth = boss.GetComponent<Boss>().getBossHealth();
             bossAlive = true;
+
+            //set health bar max health
+            bossHealthBar.GetComponentInChildren<HealthBar>().SetMaxHealth(bossHealth);
         }else if(bossAlive){//boss is active
             boss.GetComponent<Boss>().moveBoss(12.0f);
 
             collectableGenerationType = boss.GetComponent<Boss>().getCollectableGenerationMode();
             blockGenerationType = boss.GetComponent<Boss>().getObstacleGenerationMode();
-            bossAlive = boss.GetComponent<Boss>().getBossAlive();
-            if(!bossAlive){
-                updateBossThreshold();
+            
+            bossHealth = boss.GetComponent<Boss>().getBossHealth();
+            bossAlive = bossHealth > 0;
+
+            //update health bar
+            bossHealthBar.GetComponentInChildren<HealthBar>().SetHealth(bossHealth);
+            bossHealthBar.transform.position = boss.transform.position + bossHealthBarOffset;
+
+            if(!bossAlive){ //boss is dead
+                onBossDeath();
             }
         }
         // Move the active blocks towards the player
@@ -163,6 +183,9 @@ public class MovingManager : MonoBehaviour
     }
 
     void onBossDeath(){
-
+        updateBossThreshold();
+        bossHealthBar.SetActive(false);
+        blockGenerationType = "stillBig";
+        collectableGenerationType = "bullet";
     }
 }

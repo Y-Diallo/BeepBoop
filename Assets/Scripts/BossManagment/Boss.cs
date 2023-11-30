@@ -23,6 +23,9 @@ public class Boss : MonoBehaviour
     public bool getBossAlive(){
         return health > 0; // if health is <= 0 the boss is dead
     }
+    public int getBossHealth(){
+        return health; // if health is <= 0 the boss is dead
+    }
     public void damageBoss(){
         health -= 1;
         if(health <= 0){//boss beat

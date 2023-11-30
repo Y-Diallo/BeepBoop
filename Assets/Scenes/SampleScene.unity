@@ -2117,6 +2117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26c348a43226d84094565d6672ff1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 4574938018376260053, guid: fc09b38a5543d344192db802b01849ce, type: 3}
   floorPrefab: {fileID: 7212048178588327941, guid: 002fd0d18b2c7964e881e41e228fe5e6, type: 3}
   blockSpeed: 5
   distanceBetweenCollectables: 30
