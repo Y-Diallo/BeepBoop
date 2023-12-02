@@ -68,7 +68,7 @@ public class MovingManager : MonoBehaviour
             Vector3 bossSpawnLocation = new Vector3(playerController.x, 8.0f, playerController.z+20.0f);
             boss = bossFactory.createBoss("level1",bossSpawnLocation);
             bossHealthBar = Instantiate(healthBarPrefab, bossSpawnLocation+bossHealthBarOffset, Quaternion.identity);
-            
+
             //set boss health
             bossHealth = boss.GetComponent<Boss>().getBossHealth();
             bossAlive = true;
@@ -80,7 +80,7 @@ public class MovingManager : MonoBehaviour
 
             collectableGenerationType = boss.GetComponent<Boss>().getCollectableGenerationMode();
             blockGenerationType = boss.GetComponent<Boss>().getObstacleGenerationMode();
-            
+
             bossHealth = boss.GetComponent<Boss>().getBossHealth();
             bossAlive = bossHealth > 0;
 
@@ -139,6 +139,7 @@ public class MovingManager : MonoBehaviour
         }
         blocksSpawned++;
     }
+
     void GenerateCollectable(int lane, string type)
     {
         // Calculate the position of the new block
@@ -159,6 +160,7 @@ public class MovingManager : MonoBehaviour
             activeCollectables.RemoveAt(0);
         }
     }
+
 
     void GenerateFloor()
     {
