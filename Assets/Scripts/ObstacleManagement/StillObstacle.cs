@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StillBigObstacle : BigObstacle
+public class StillObstacle : BigObstacle
 {
-    public StillBigObstacle() :base(){}
+    public StillObstacle() :base(){}
     public override void moveObstacle(float blockSpeed){
         return;
     }

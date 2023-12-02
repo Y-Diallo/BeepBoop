@@ -905,7 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bigPrefab: {fileID: 8402735521250307789, guid: cdea8648367cf1c469006e0f8df82e7d, type: 3}
-  rampPrefab: {fileID: 0}
+  tallPrefab: {fileID: 8402735521250307789, guid: 1d1495eed5dbd5646a50e83a13433155, type: 3}
 --- !u!4 &649783783
 Transform:
   m_ObjectHideFlags: 0
@@ -936,6 +936,7 @@ MonoBehaviour:
   damagingCollectablePrefab: {fileID: 8402735521250307789, guid: 39916003f7f154842b92f3d89ae16b70, type: 3}
   bulletCollectablePrefab: {fileID: 8402735521250307789, guid: 8ddcdb804f76a8d449a0294471832820, type: 3}
   boss1CollectablePrefab: {fileID: 8402735521250307789, guid: db258a042bf364c4eaa9ea193efd2daf, type: 3}
+  boss2CollectablePrefab: {fileID: 8402735521250307789, guid: 86a0a84f2c42b044e89beb2bceab457d, type: 3}
 --- !u!114 &649783785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,7 +949,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3569398608e416d4cab6a8da1068e637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level1BossPrefab: {fileID: 3012554715132903280, guid: 20cfd704e6b4d9c43b38f8692916578a, type: 3}
+  boss1Prefab: {fileID: 3012554715132903280, guid: 20cfd704e6b4d9c43b38f8692916578a, type: 3}
+  boss2Prefab: {fileID: 3012554715132903280, guid: 21a2ca94679100c49b23bb4310c619cf, type: 3}
 --- !u!114 &649783786
 MonoBehaviour:
   m_ObjectHideFlags: 0

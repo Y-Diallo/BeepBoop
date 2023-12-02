@@ -31,12 +31,10 @@ public class MovingManager : MonoBehaviour
     public float nextCollectableGenerationPosition { get; private set; } = 10.0f;
     private int blocksSpawned = 0; //used to determine when the boss is spawned
     private float nextFloorGenerationPosition = -50.0f;
-    // TODO WIP obstacleGenerationMode // used to have custom block spawning modes for bosses
-    // private string obstacleGenerationMode = "default"; // "level1","level2","level3" (consider enum val)
-
     private CourseCreator courseCreator;
     private int currentBossThreshold = 10;
     public PlayerController playerController;
+    private string currentBoss = "boss1";
 
     void Start()
     {
@@ -66,7 +64,7 @@ public class MovingManager : MonoBehaviour
     {
         if(!bossAlive && blocksSpawned > currentBossThreshold){
             Vector3 bossSpawnLocation = new Vector3(playerController.x, 8.0f, playerController.z+20.0f);
-            boss = bossFactory.createBoss("level1",bossSpawnLocation);
+            boss = bossFactory.createBoss(currentBoss,bossSpawnLocation);
             bossHealthBar = Instantiate(healthBarPrefab, bossSpawnLocation+bossHealthBarOffset, Quaternion.identity);
 
             //set boss health
@@ -77,7 +75,7 @@ public class MovingManager : MonoBehaviour
             bossHealthBar.GetComponentInChildren<HealthBar>().SetMaxHealth(bossHealth);
 
             //get boss course creator
-            courseCreator = courseFactory.createCourse("level1",this);
+            courseCreator = courseFactory.createCourse(currentBoss,this);
 
         }else if(bossAlive){//boss is active
             boss.GetComponent<Boss>().moveBoss(12.0f);
@@ -175,6 +173,11 @@ public class MovingManager : MonoBehaviour
         updateBossThreshold();
         bossHealthBar.SetActive(false);
         courseCreator = new CourseCreator(this);
+        if(currentBoss == "boss1"){
+            currentBoss = "boss2";
+        } else {
+            currentBoss = "boss1";
+        }
     }
     public class CourseCreator
     {

@@ -5,7 +5,8 @@ using UnityEngine;
 public class ObstacleFactory : MonoBehaviour
 {
     [SerializeField] private GameObject bigPrefab;
-    [SerializeField] private GameObject rampPrefab;
+    [SerializeField] private GameObject tallPrefab;
+    // [SerializeField] private GameObject rampPrefab;
 
     public GameObject createBigObstacle(Vector3 position){
         var obstacle = Instantiate(bigPrefab, position, Quaternion.identity);
@@ -15,7 +16,13 @@ public class ObstacleFactory : MonoBehaviour
 
     public GameObject createStillBigObstacle(Vector3 position){
         var obstacle = Instantiate(bigPrefab, position, Quaternion.identity);
-        obstacle.AddComponent<StillBigObstacle>();
+        obstacle.AddComponent<StillObstacle>();
+        return obstacle;
+    }
+
+    public GameObject createStillTallObstacle(Vector3 position){
+        var obstacle = Instantiate(tallPrefab, position, Quaternion.identity);
+        obstacle.AddComponent<StillObstacle>();
         return obstacle;
     }
 
@@ -24,6 +31,8 @@ public class ObstacleFactory : MonoBehaviour
             return createBigObstacle(position);
         } else if (type == "stillBig"){
             return createStillBigObstacle(position);
+        } else if (type == "stillTall"){
+            return createStillTallObstacle(position);
         }
         return createBigObstacle(position);
     }
