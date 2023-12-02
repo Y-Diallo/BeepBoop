@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Level1Boss : Boss
 {
-    public override string getObstacleGenerationMode(){
+    public override string getObstacleGenerationType(){
         return "big";
     }
-    public override string getCollectableGenerationMode(){
+    public override string getCollectableGenerationType(){
         int randomNum = Random.Range(0,2); //0,1
         if (randomNum == 1){
             return "damaging";

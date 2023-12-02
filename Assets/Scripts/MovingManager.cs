@@ -9,33 +9,32 @@ public class MovingManager : MonoBehaviour
     public float blockSpeed = 5.0f;
     public float distanceBetweenCollectables = 30.0f;
     public float collectableGenerationDistance = 30.0f;
-    public float distanceBetweenBlocks = 30.0f;
-    public float blockGenerationDistance = 30.0f;
+    public float distanceBetweenObstacles = 30.0f;
+    public float obstacleGenerationDistance = 30.0f;
     public float floorGenerationDistance = 10.0f;
     public int numberOfLanes = 3;
-    private ObstacleFactory obstacleFactory;
-    private CollectableFactory collectableFactory;
+    public ObstacleFactory obstacleFactory { get; private set; }
+    public CourseFactory courseFactory { get; private set; }
+    public CollectableFactory collectableFactory { get; private set; }
     private BossFactory bossFactory;
     private float distanceBetweenFloors = 10.0f;
-    private float laneDistance = 3.0f;
-    private List<GameObject> activeBlocks = new List<GameObject>();
-    private List<GameObject> activeCollectables = new List<GameObject>();
+    public float laneDistance { get; private set; } = 3.0f;
+    public List<GameObject> activeBlocks { get; private set; } = new List<GameObject>();
+    public List<GameObject> activeCollectables { get; private set; } = new List<GameObject>();
     private List<GameObject> activeFloors = new List<GameObject>();
     private GameObject bossHealthBar;
     private Vector3 bossHealthBarOffset = new Vector3(0.0f, 2f, -2.0f);
-    private GameObject boss;
+    public GameObject boss { get; private set; }
     private int bossHealth;
     private bool bossAlive = false;
-    private float nextBlockGenerationPosition = 10.0f;
-    private float nextCollectableGenerationPosition = 10.0f;
+    public float nextObstacleGenerationPosition { get; private set; } = 10.0f;
+    public float nextCollectableGenerationPosition { get; private set; } = 10.0f;
     private int blocksSpawned = 0; //used to determine when the boss is spawned
     private float nextFloorGenerationPosition = -50.0f;
     // TODO WIP obstacleGenerationMode // used to have custom block spawning modes for bosses
     // private string obstacleGenerationMode = "default"; // "level1","level2","level3" (consider enum val)
 
-    //temporary switches for generation type, use more sophisticated method
-    private string blockGenerationType = "stillBig";
-    private string collectableGenerationType = "bullet";
+    private CourseCreator courseCreator;
     private int currentBossThreshold = 10;
     public PlayerController playerController;
 
@@ -48,6 +47,9 @@ public class MovingManager : MonoBehaviour
         obstacleFactory = factory.GetComponent<ObstacleFactory>();
         collectableFactory = factory.GetComponent<CollectableFactory>();
         bossFactory = factory.GetComponent<BossFactory>();
+        courseFactory = factory.GetComponent<CourseFactory>();
+
+        courseCreator = new CourseCreator(this);
 
 
         GenerateFloor();
@@ -57,9 +59,7 @@ public class MovingManager : MonoBehaviour
         GenerateFloor();
         GenerateFloor();
         GenerateFloor();
-        // GenerateBlock();
-        // GenerateBlock();
-        // GenerateBlock();
+
     }
 
     void Update()
@@ -75,12 +75,13 @@ public class MovingManager : MonoBehaviour
 
             //set health bar max health
             bossHealthBar.GetComponentInChildren<HealthBar>().SetMaxHealth(bossHealth);
+
+            //get boss course creator
+            courseCreator = courseFactory.createCourse("level1",this);
+
         }else if(bossAlive){//boss is active
             boss.GetComponent<Boss>().moveBoss(12.0f);
-
-            collectableGenerationType = boss.GetComponent<Boss>().getCollectableGenerationMode();
-            blockGenerationType = boss.GetComponent<Boss>().getObstacleGenerationMode();
-
+            
             bossHealth = boss.GetComponent<Boss>().getBossHealth();
             bossAlive = bossHealth > 0;
 
@@ -100,15 +101,13 @@ public class MovingManager : MonoBehaviour
         }
 
         // Check if a new block needs to be generated
-        if (nextBlockGenerationPosition - playerController.z <= distanceBetweenBlocks)
+        if (nextObstacleGenerationPosition - playerController.z <= distanceBetweenObstacles)
         {
-            int lane = Random.Range(0, numberOfLanes)-1;
-            GenerateBlock(lane,blockGenerationType);
+            GenerateObstacle();
         }
         if (nextCollectableGenerationPosition - playerController.z <= distanceBetweenCollectables)
         {
-            int lane = Random.Range(0, numberOfLanes)-1;
-            GenerateCollectable(lane,collectableGenerationType);
+            GenerateCollectable();
         }
 
         if (nextFloorGenerationPosition - playerController.z <= distanceBetweenFloors)
@@ -118,18 +117,12 @@ public class MovingManager : MonoBehaviour
         }
     }
 
-    void GenerateBlock(int lane, string type)
+    void GenerateObstacle()
     {
-        // Calculate the position of the new block
-        float xPos = lane * laneDistance;
-        float zPos = nextBlockGenerationPosition + blockGenerationDistance;
+        activeBlocks.AddRange(courseCreator.GenerateObstacle());
 
-        // Create the new block
-        GameObject newBlock = obstacleFactory.createObstacle(type, new Vector3(xPos, 0.0f, zPos));
-        activeBlocks.Add(newBlock);
-
-        // Update the next block generation position
-        nextBlockGenerationPosition += distanceBetweenBlocks;
+        // Update the next obstacle generation position
+        nextObstacleGenerationPosition += distanceBetweenObstacles;
 
         // Destroy the oldest block after a new one is generated with a buffer of 3
         if (activeBlocks.Count > 15)
@@ -140,17 +133,11 @@ public class MovingManager : MonoBehaviour
         blocksSpawned++;
     }
 
-    void GenerateCollectable(int lane, string type)
+    void GenerateCollectable()
     {
-        // Calculate the position of the new block
-        float xPos = lane * laneDistance;
-        float zPos = nextCollectableGenerationPosition + collectableGenerationDistance;
+        activeCollectables.AddRange(courseCreator.GenerateCollectable());
 
-        // Create the new block
-        GameObject newCollectable = collectableFactory.createCollectable(type, new Vector3(xPos, 3.0f, zPos));
-        activeCollectables.Add(newCollectable);
-
-        // Update the next block generation position
+        // Update the next obstacle generation position
         nextCollectableGenerationPosition += distanceBetweenCollectables;
 
         // Destroy the oldest block after a new one is generated with a buffer of 3
@@ -187,7 +174,51 @@ public class MovingManager : MonoBehaviour
     void onBossDeath(){
         updateBossThreshold();
         bossHealthBar.SetActive(false);
-        blockGenerationType = "stillBig";
-        collectableGenerationType = "bullet";
+        courseCreator = new CourseCreator(this);
+    }
+    public class CourseCreator
+    {
+        //store if prev obstale filled a lane
+        // private bool prevLaneLeft = false;
+        // private bool prevLaneMid = false;
+        // private bool prevLaneRight = false;
+        protected MovingManager mm;
+        public CourseCreator(MovingManager mm){
+            this.mm = mm;
+        }
+        public virtual List<GameObject> GenerateObstacle()
+        {
+            // Calculate the position of the new obstacle
+            int lane = Random.Range(0, mm.numberOfLanes)-1;
+            float xPos = lane * mm.laneDistance;
+            float zPos = mm.nextObstacleGenerationPosition + mm.obstacleGenerationDistance;
+            string obstacleType = getObstacleType();
+
+            // Create the new obstacle
+            GameObject newObstacle = mm.obstacleFactory.createObstacle(obstacleType, new Vector3(xPos, 0.0f, zPos));
+
+            return new List<GameObject>{newObstacle};
+        }
+
+        public virtual List<GameObject> GenerateCollectable()
+        {
+            // Calculate the position of the new obstacle
+            int lane = Random.Range(0, mm.numberOfLanes)-1;
+            float xPos = lane * mm.laneDistance;
+            float zPos = mm.nextCollectableGenerationPosition + mm.collectableGenerationDistance;
+            string collectableType = getCollectableType();
+
+            // Create the new obstacle
+            GameObject newCollectable = mm.collectableFactory.createCollectable(collectableType, new Vector3(xPos, 3.0f, zPos));
+
+            return new List<GameObject>{newCollectable};
+        }
+
+        protected virtual string getObstacleType(){
+            return "stillBig";
+        }
+        protected virtual string getCollectableType(){
+            return "bullet";
+        }
     }
 }

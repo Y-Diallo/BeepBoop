@@ -884,6 +884,7 @@ GameObject:
   - component: {fileID: 649783782}
   - component: {fileID: 649783784}
   - component: {fileID: 649783785}
+  - component: {fileID: 649783786}
   m_Layer: 0
   m_Name: Factory
   m_TagString: Untagged
@@ -948,6 +949,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level1BossPrefab: {fileID: 3012554715132903280, guid: 20cfd704e6b4d9c43b38f8692916578a, type: 3}
+--- !u!114 &649783786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649783781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e7eefad60147f4d82831595e318f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,8 +2145,8 @@ MonoBehaviour:
   blockSpeed: 5
   distanceBetweenCollectables: 30
   collectableGenerationDistance: 30
-  distanceBetweenBlocks: 15
-  blockGenerationDistance: 50
+  distanceBetweenObstacles: 15
+  obstacleGenerationDistance: 30
   floorGenerationDistance: 100
   numberOfLanes: 3
   playerController: {fileID: 32037106}

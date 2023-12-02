@@ -14,10 +14,10 @@ public class Boss : MonoBehaviour
     public void moveBoss(float playerSpeed){
         this.gameObject.transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
     }
-    public virtual string getObstacleGenerationMode(){
+    public virtual string getObstacleGenerationType(){
         return "stillBig";
     }
-    public virtual string getCollectableGenerationMode(){
+    public virtual string getCollectableGenerationType(){
         return "bullet";
     }
     public bool getBossAlive(){
