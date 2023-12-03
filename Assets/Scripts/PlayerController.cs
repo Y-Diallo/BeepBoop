@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         gameObject.tag = "Player"; // Set the tag of the player object to "Player"
         characterController = GetComponent<CharacterController>(); // Get the character controller component of the player
-
+        Time.timeScale = 1;
     }
 
     void Update()
