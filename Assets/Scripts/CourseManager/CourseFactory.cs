@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CourseFactory : MonoBehaviour
 {
-    public MovingManager.CourseCreator createLevel1BossCourse(MovingManager mm){
+    public CourseCreator createLevel1BossCourse(MovingManager mm){
         return new Boss1CourseCreator(mm);
     }
-    public MovingManager.CourseCreator createLevel2BossCourse(MovingManager mm){
+    public CourseCreator createLevel2BossCourse(MovingManager mm){
         return new Boss2CourseCreator(mm);
     }
 
-    public MovingManager.CourseCreator createCourse(string type, MovingManager mm){
+    public CourseCreator createCourse(string type, MovingManager mm){
         if (type == "boss1"){
             return createLevel1BossCourse(mm);
         } 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 //the purpose of this object is to orchestrate the placement of obstacles and collectables
-public class Boss1CourseCreator : MovingManager.CourseCreator
+public class Boss1CourseCreator : CourseCreator
 {
     //store if prev obstale filled a lane
     // private bool prevLaneLeft = false;

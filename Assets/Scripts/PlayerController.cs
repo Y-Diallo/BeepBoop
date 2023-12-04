@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private int currentLane = 1; // the lane the player is currently in
     // private bool InJump = false; // whether the player is currently jumping
     // private bool InRoll = false; // whether the player is currently rolling
+    private Animator animator;
     public float x; // the x position of the player
     public float y; // the y position of the player
     public float z; // the z position of the player
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         gameObject.tag = "Player"; // Set the tag of the player object to "Player"
         characterController = GetComponent<CharacterController>(); // Get the character controller component of the player
         Time.timeScale = 1;
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -90,6 +92,7 @@ public class PlayerController : MonoBehaviour
 
         // Freeze everything
         Time.timeScale = 0;
+        animator.Play("a_Idle");
         gameOverText.SetActive(true);
     }
 
@@ -135,6 +138,7 @@ public class PlayerController : MonoBehaviour
             {
                 y = jumpHeight;
                 // InJump = true;
+                animator.Play("Jump");
             } 
         }else
         {
@@ -145,7 +149,7 @@ public class PlayerController : MonoBehaviour
     public System.Collections.IEnumerator StartCooldown()
      {
         canLaneChange = false;
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.2f);
         canLaneChange = true;
      }
 }
