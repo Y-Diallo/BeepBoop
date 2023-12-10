@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public HITZ hitZ = HITZ.NONE;
     public Material playerDead;
     public GameObject gameOverText;
+    public GameObject winText;
     private CharacterController characterController; // the character controller component of the player
     // private Animator animator; // the animator component of the player
     private float newXPosition; // the x position of the player after a lane change
@@ -94,6 +95,15 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0;
         animator.Play("a_Idle");
         gameOverText.SetActive(true);
+    }
+
+    public void winGame()
+    {
+        gameOver = true;
+        Time.timeScale = 0;
+        animator.Play("a_Idle");
+        winText.SetActive(true);
+
     }
 
     private void OnCollisionEnter(Collision other)

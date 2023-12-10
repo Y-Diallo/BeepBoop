@@ -36,8 +36,6 @@ public class Boss : MonoBehaviour
 
     public virtual void bossDeath(){
         this.gameObject.SetActive(false);
-
-        // Time.timeScale = 0;
     }
 
     // Start is called before the first frame update

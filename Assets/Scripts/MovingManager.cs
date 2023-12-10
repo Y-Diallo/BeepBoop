@@ -177,6 +177,7 @@ public class MovingManager : MonoBehaviour
             currentBoss = "boss2";
         } else {
             currentBoss = "boss1";
+            playerController.winGame();
         }
     }
     
