@@ -79,7 +79,7 @@ public class MovingManager : MonoBehaviour
 
         }else if(bossAlive){//boss is active
             boss.GetComponent<Boss>().moveBoss(12.0f);
-            
+
             bossHealth = boss.GetComponent<Boss>().getBossHealth();
             bossAlive = bossHealth > 0;
 
@@ -176,9 +176,8 @@ public class MovingManager : MonoBehaviour
         if(currentBoss == "boss1"){
             currentBoss = "boss2";
         } else {
-            currentBoss = "boss1";
             playerController.winGame();
         }
     }
-    
+
 }

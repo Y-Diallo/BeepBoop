@@ -11,6 +11,8 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         offset = transform.position;//target is at 0,0,0
+        GameObject.Find("backgroundMusic").GetComponent<AudioSource>().Play();
+
     }
 
     // Update is called once per frame

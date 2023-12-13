@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
                 side = SIDE.CENTER;
                 newXPosition = 0;
             }
-            
+
             StartCoroutine(StartCooldown());
         }
         else if (horizontalInput > 0 && canLaneChange )
@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0;
         animator.Play("a_Idle");
         winText.SetActive(true);
+        GameObject.Find("backgroundMusic").GetComponent<AudioSource>().Stop();
+        GameObject.Find("winSFX").GetComponent<AudioSource>().Play();
 
     }
 
@@ -149,7 +151,7 @@ public class PlayerController : MonoBehaviour
                 y = jumpHeight;
                 // InJump = true;
                 animator.Play("Jump");
-            } 
+            }
         }else
         {
             y -= jumpHeight * 2 * Time.deltaTime;

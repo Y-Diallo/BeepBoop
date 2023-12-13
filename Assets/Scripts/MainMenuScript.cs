@@ -5,12 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-   
+
+    void Start(){
+         Scene currentScene = SceneManager.GetActiveScene();
+        Debug.Log("Current scene name: " + currentScene.name);
+
+        if (currentScene.name == "WelcomeScene" || currentScene.name == "InstructionScene")
+        {
+            GameObject.Find("MainBackgroundMusic").GetComponent<AudioSource>().Play();
+        }
+
+    }
+
     public void PlayButton()
     {
         SceneManager.LoadScene("SampleScene");
     }
-
 
     public void InstructionButton()
     {
